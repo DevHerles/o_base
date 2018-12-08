@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="oeh_medical_samu_emergency_wizard_view_form_inherit_wizard_appointment" model="ir.ui.view">
+            <field name="name">emergency.wizard.form</field>
+            <field name="model">wizard.samu.emergency</field>
+            <field name="inherit_id" ref="oehealth_appointment.wizard_appointment_search_patient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='search_patients']" position="after">
+                    <button name="search_patients" string="Indocumentado" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='update_history']" position="after">
+                    <button name="request_emergency" string="Solicitar emergencia" type="object"
+                    icon="fa fa-ambulance fa-lg" attrs="{'invisible': [('patient_id','=',False)]}"/>
+                </xpath>
+                <xpath expr="//page[2]" position="replace"/>
+                <xpath expr="//field[@name='q']" position="attributes">
+                    <attribute name="placeholder">Ingrese número de documento</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="oeh_medical_samu_emergency_wizard_view_action" model="ir.actions.act_window">
+            <field name="name">Registrar emergencia</field>
+            <field name="res_model">wizard.samu.emergency</field>
+            <field name="view_id" ref="oeh_medical_samu_emergency_wizard_view_form_inherit_wizard_appointment"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="oeh_medical_samu_emergency_view_action" model="ir.actions.act_window">
+            <field name="name">Registrar emergencia</field>
+            <field name="res_model">oeh.medical.samu.emergency</field>
+            <field name="view_id" ref="oeh_medical_samu_emergency_view_form_inherit_medical_emergency"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_emergency_wizard_action" model="ir.actions.act_window">
+            <field name="name">Registrar emergencia</field>
+            <field name="res_model">wizard.samu.emergency</field>
+            <field name="view_id" ref="oeh_medical_samu_emergency_wizard_view_form_inherit_wizard_appointment"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem
+            id="oehealth_samu_menu_root"
+            web_icon="oehealth_samu,static/description/icon.png"
+            name="SAMU"
+            sequence="10"/>
+
+        <menuitem
+            id="oehealth_samu_emergency_menu_root_action"
+            name="Emergencias"
+            parent="oehealth_samu_menu_root"
+            groups="group_oehealth_samu_manager"
+            sequence="10"/>
+
+        <menuitem
+            id="oehealth_samu_emergency_wizard_menu_action"
+            name="Búsqueda de paciente"
+            parent="oehealth_samu_emergency_menu_root_action"
+            action="oehealth_samu_emergency_wizard_action"
+            sequence="10"/>
+
+        <menuitem
+            id="oehealth_samu_emergency_menu_action"
+            name="Emergencias"
+            parent="oehealth_samu_emergency_menu_root_action"
+            action="oeh_medical_samu_emergency_view_action"
+            sequence="20"/>
+    </data>
+</odoo>
+

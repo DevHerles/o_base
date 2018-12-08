@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="oehealth_samu_unidadesmoviles_view_form" model="ir.ui.view">
+            <field name="name">Unidas móviles</field>
+            <field name="model">oehealth.samu.mobileunit</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Label">
+                    <header>
+                        <button name="set_to_regulation" states="bussy" string="Liberar unidad" type="object"
+                                attrs="{'invisible': [('state','!=','bussy')]}"/>
+                        <field name="state" widget="statusbar" clickable="1"/>
+                    </header>
+                    <sheet>
+                        <notebook>
+                            <page string="Detalle">
+                                <group>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="unitytype_id"/>
+                                        <field name="license_plate"/>
+                                        <field name="brand_id"/>
+                                        <field name="bodywork_id"/>
+                                        <field name="condition_id"/>
+                                        <field name="image" widget="image"/>
+                                    </group>
+                                    <group>
+                                        <field name="has_gps"/>
+                                        <field name="mileage"/>
+                                        <field name="fuel_id"/>
+                                        <field name="patrimony_code"/>
+                                        <field name="model_id"/>
+                                        <field name="mantainance_id"/>
+                                        <field name="line_ids">
+                                            <tree editable="bottom">
+                                                <field name="image" widget="image"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+
+                                <group>
+                                    <group>
+                                        <field name="state_id"/>
+                                        <field name="province_id"/>
+                                        <field name="district_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Condiciones de unidad">
+                                <group>
+                                    <group>
+                                        <field name="current_mileage"/>
+                                        <field name="previous_mileage"/>
+                                        <field name="last_mileage_traveled"/>
+                                        <field name="current_fuel"/>
+                                    </group>
+                                    <group>
+                                        <field name="soat_expiration_date"/>
+                                        <field name="next_technical_review"/>
+                                        <field name="approximate_maintenance_date"/>
+                                        <field name="mechanical_company_id"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="radiator_water"/>
+                                        <field name="battery_water"/>
+                                        <field name="wiper_water"/>
+                                        <field name="siren"/>
+                                        <field name="high_light"/>
+                                        <field name="low_light"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Images">
+                                <field name="line_ids" widget="one2many_slick_images" options="{}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_action" model="ir.actions.act_window">
+            <field name="name">Unidades móviles</field>
+            <field name="res_model">oehealth.samu.mobileunit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_brand_action" model="ir.actions.act_window">
+            <field name="name">Marcas de vehículos</field>
+            <field name="res_model">oehealth.samu.mobileunit.brand</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_bodywork_action" model="ir.actions.act_window">
+            <field name="name">Carrocerías de vehículos</field>
+            <field name="res_model">oehealth.samu.mobileunit.bodywork</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_condition_action" model="ir.actions.act_window">
+            <field name="name">Condiciones de vehículos</field>
+            <field name="res_model">oehealth.samu.mobileunit.condition</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_fuel_action" model="ir.actions.act_window">
+            <field name="name">Combustibles</field>
+            <field name="res_model">oehealth.samu.mobileunit.fuel</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_model_action" model="ir.actions.act_window">
+            <field name="name">Modelos de vehículos</field>
+            <field name="res_model">oehealth.samu.mobileunit.model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="oehealth_samu_mobileunit_maintenance_action" model="ir.actions.act_window">
+            <field name="name">Mantenimiento (Km)</field>
+            <field name="res_model">oehealth.samu.mobileunit.maintenance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="oehealth_samu_menu_root"
+            web_icon="oehealth_samu,static/description/icon.png"
+            name="SAMU"
+            sequence="10"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_menu_action"
+            name="Unidades móviles"
+            parent="oehealth_samu_menu_root"
+            action="oehealth_samu_mobileunit_action"
+            groups="group_oehealth_samu_manager"
+            sequence="20"/>
+
+        <menuitem
+            id="oehealth_samu_configuration_menu_action"
+            name="Configuraciones"
+            parent="oehealth_samu_menu_root"
+            groups="group_oehealth_samu_manager"
+            sequence="40"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_config_menu_action"
+            name="Unidades móviles"
+            parent="oehealth_samu_configuration_menu_action"
+            sequence="1"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_brand_menu_action"
+            name="Marcas de vehículos"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            action="oehealth_samu_mobileunit_brand_action"
+            sequence="1"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_bodywork_menu_action"
+            name="Carrocerías de vehículos"
+            action="oehealth_samu_mobileunit_bodywork_action"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            sequence="2"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_condition_menu_action"
+            name="Condición de vehículos"
+            action="oehealth_samu_mobileunit_condition_action"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            sequence="3"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_fuel_menu_action"
+            name="Combustibles"
+            action="oehealth_samu_mobileunit_fuel_action"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            sequence="3"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_model_menu_action"
+            name="Modelo de vehículos"
+            action="oehealth_samu_mobileunit_model_action"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            sequence="3"/>
+
+        <menuitem
+            id="oehealth_samu_mobileunit_maintenance_menu_action"
+            name="Mantenimiento según kilometraje"
+            action="oehealth_samu_mobileunit_maintenance_action"
+            parent="oehealth_samu_mobileunit_config_menu_action"
+            sequence="3"/>
+    </data>
+</odoo>
